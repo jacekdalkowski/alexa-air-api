@@ -12,6 +12,7 @@ var api = require('./routes/api');
 var apiCracow = require('./routes/apiCracow');
 
 var app = express();
+global.app = app;
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));

@@ -6,7 +6,9 @@ var log4js = require('log4js');
 var logger = log4js.getLogger('grido.web.identity.handlers.users_handler');
 var Db = require('../db/db.js');
 
-router.use(alexaVerifier);
+if (process.env.NODE_ENV !== 'development') {
+  router.use(alexaVerifier);
+}
 router.use(bodyParser.json());
 router.use(bodyParser.urlencoded({ extended: false }));
 
