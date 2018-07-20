@@ -3,7 +3,7 @@ var alexaVerifier = require('alexa-verifier-middleware');
 var bodyParser = require('body-parser');
 var router = express.Router();
 var log4js = require('log4js');
-var logger = log4js.getLogger('grido.web.identity.handlers.users_handler');
+var logger = log4js.getLogger('routes.apiCracow');
 var Db = require('../db/db.js');
 
 if (process.env.NODE_ENV !== 'development') {
@@ -49,12 +49,15 @@ router.post('/', function(req, res, next) {
       intentName,
       intentHandler;
 
+  logger.debug('Handling request of type: ' + requestType);
   if(requestType === 'IntentRequest'){
     intentName = req.body.request.intent.name;
+    logger.debug('Handling intent of name: ' + intentName);
     if(intentToHandler.has(intentName)){
       intentHandler = intentToHandler.get(intentName);
       intentHandler(req, res, next);
     }else{
+      logger.error('Returning 404');
       res.status(404).send('Not found');
     }
   }else if(requestType === 'LaunchRequest'){
@@ -63,7 +66,7 @@ router.post('/', function(req, res, next) {
   }else if(requestType === 'SessionEndedRequest'){
     res.end();
   }else{
-    // TODO log
+    logger.error('Returning 404');
     res.status(404).send('Not found');
   }
 });

@@ -1,14 +1,19 @@
 module.exports = (function() {
     
     var log4js = require('log4js');
+    var isInited = false;
 
     function setup(){
+
+        if(isInited){
+            return;
+        }
 
         log4js.configure({
             appenders: { 
                 file: { 
                     type: 'dateFile', 
-                    filename: 'logs/grido-web-identity.log', 
+                    filename: 'logs/alexa-air.log', 
                     pattern: "--yyyy-MM-dd",
                     layout: {
                         type: 'pattern',
@@ -19,6 +24,7 @@ module.exports = (function() {
             categories: { default: { appenders: ['file'], level: 'trace' } }
         });
 
+        isInited = true;
     }
 
     return {

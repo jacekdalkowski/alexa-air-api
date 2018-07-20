@@ -20,7 +20,7 @@ app.set('view engine', 'jade');
 
 // uncomment after placing your favicon in /public
 //app.use(favicon(__dirname + '/public/favicon.ico'));
-var log4jsLogger = log4js.getLogger();
+var log4jsLogger = log4js.getLogger('morgan');
 var morganLogger = morgan({
   "format": "default",
   "stream": {
