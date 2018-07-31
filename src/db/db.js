@@ -8,62 +8,53 @@ module.exports = (function(){
             _collection = collection,
             _logger = log4js.getLogger('air.api.db.db');
 
-        _self.getAirQuality = function(app, onSuccess, onError){
+        _self.getAirQuality = function(apps, onSuccess, onError){
             _collection.aggregate([
-                { $match: {'app': { $eq: app }}},
+                { $match: {'app': { $in: apps }}},
                 { $project : { 
+                  'app': 1,
                   'air' : 1 } }])
             .toArray(function(err, items) {
-                if(!err && items.length == 1){
-                    onSuccess(items[0]);
+                if(!err){
+                    onSuccess(items);
                 }else{
-                    if(err){
-                        _logger.error('An error occured when fetching air info for app ' + app + ': ' + err);
-                    }else if(items.length != 1){
-                        _logger.error('An error occured when fetching air info for app ' + app + ': number of items found is: ' + items.length + ". Should be 1.");
-                    }
+                    _logger.error('An error occured when fetching air info for apps ' + apps + ': ' + err);
                     onError();
                 }
             });
         };
 
-        _self.getWeather = function(app, onSuccess, onError){
+        _self.getWeather = function(apps, onSuccess, onError){
             _collection.aggregate([
-                { $match: {'app': { $eq: app }}},
+                { $match: {'app': { $in: apps }}},
                 { $unwind : '$weather.list' },  
                 { $match : {'weather.list.dt' : { $gte: 1499520000 } } },  
                 { $project : { 
+                  'app': 1,
                   'weather.dt' : '$weather.list.dt',  
                   'weather.temp' : '$weather.list.main.temp', 
                   'weather.descriptions' : '$weather.list.weather.description' } }])
             .toArray(function(err, items) {
-                if(!err && items.length == 1){
-                    onSuccess(items[0]);
+                if(!err){
+                    onSuccess(items);
                 }else{
-                    if(err){
-                        _logger.error('An error occured when fetching weather info for app ' + app + ': ' + err);
-                    }else if(items.length != 1){
-                        _logger.error('An error occured when fetching weather info for app ' + app + ': number of items found is: ' + items.length + ". Should be 1.");
-                    }
+                    _logger.error('An error occured when fetching weather info for apps ' + apps + ': ' + err);
                     onError();
                 }
             });
         };
 
-        _self.getStatus = function(app, onSuccess, onError){
+        _self.getStatus = function(apps, onSuccess, onError){
             _collection.aggregate([
-                { $match: {'app': { $eq: app }}},
+                { $match: {'app': { $in: apps }}},
                 { $project : { 
+                  'app': 1,
                   'status' : 1 } }])
             .toArray(function(err, items) {
-                if(!err && items.length == 1){
-                    onSuccess(items[0]);
+                if(!err){
+                    onSuccess(items);
                 }else{
-                    if(err){
-                        _logger.error('An error occured when fetching status info for app ' + app + ': ' + err);
-                    }else if(items.length != 1){
-                        _logger.error('An error occured when fetching status info for app ' + app + ': number of items found is: ' + items.length + ". Should be 1.");
-                    }
+                    _logger.error('An error occured when fetching status info for apps ' + apps + ': ' + err);
                     onError();
                 }
             });

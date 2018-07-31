@@ -2,19 +2,26 @@ extends layout
 
 block content
   h1 Welcome to Air server
-  h3 Cracow
   div(style='padding-left: 10px;')
-    h5 air
-    p(style='white-space:pre; padding-left: 10px;')
-      | air pm10 level: 
-      | #{air.air.pm_10}
-    h5 scrape status
-    p(style='white-space:pre; padding-left: 10px;')
-      | timestamp: 
-      | #{status.status.timestamp}
-      | 
-      | state: 
-      | #{status.status.state}
-      | 
-      | script version: 
-      | #{status.status.scrapeScriptVersion}
+    h3 air
+    div(style='white-space:pre; padding-left: 10px;')
+      each a in air
+        div(style='white-space:pre; padding-left: 10px;')
+        h5 #{a.app}
+        p(style='white-space:pre; padding-left: 10px;')
+          | air pm10 level: 
+          | #{a.air.pm_10}
+    h3 scrape status
+    div(style='white-space:pre; padding-left: 10px;')
+      each s in status
+        div(style='white-space:pre; padding-left: 10px;')
+        h5 #{s.app}
+        p(style='white-space:pre; padding-left: 10px;')
+          | timestamp: 
+          | #{s.status.timestamp}
+          | 
+          | state: 
+          | #{s.status.state}
+          | 
+          | script version: 
+          | #{s.status.scrapeScriptVersion}

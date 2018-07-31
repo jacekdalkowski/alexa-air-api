@@ -8,7 +8,7 @@ router.get('/', function(req, res, next) {
     db = new Db(collection),
     viewModel = {};
 
-  db.getStatus('cracow',
+  db.getStatus(['cracow', 'nyc'],
     function onSuccess(status){
       viewModel.status = status;
       onDataFetched();
@@ -17,7 +17,7 @@ router.get('/', function(req, res, next) {
       res.render('index', { title: 'Express' });
     });
 
-  db.getAirQuality('cracow',
+  db.getAirQuality(['cracow', 'nyc'],
     function onSuccess(air){
       viewModel.air = air;
       onDataFetched();
