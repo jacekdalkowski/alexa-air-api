@@ -17,13 +17,13 @@ intentToHandler.set('GetAirQuality', handleGetAirQualityRequest);
 intentToHandler.set('GetWeatherForecast', handleGetWeatherForecastRequest);
 
 function handleGetAirQualityRequest(req, res, next) {
-  var app = 'cracow',
+  var app = ['cracow'],
     collection = req.app.locals.db.collection('airpolution'),
     db = new Db(collection);
 
   db.getAirQuality(app,
-    function onSuccess(item){
-      res.json(buildGetAirQualityResponse(item));
+    function onSuccess(items){
+      res.json(buildGetAirQualityResponse(items[0]));
     },
     function onError(){
       res.json(buildErrorResponse());

@@ -33,8 +33,7 @@ app.use(morganLogger);
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', routes);
-app.use('/api/airpolution', api);
-app.use('/api/cracow', apiCracow);
+app.use('/api', api);
 
 //app.use(bodyParser.json());
 //app.use(bodyParser.urlencoded({ extended: false }));
