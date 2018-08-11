@@ -13,7 +13,7 @@ router.use(bodyParser.urlencoded({ extended: false }));
 router.post('/cracow', GetRequestHandler('cracow'));
 router.post('/nyc', GetRequestHandler('nyc'));
 router.post('/la', GetRequestHandler('la'));
-router.post('/vancouver', GetRequestHandler('vancouver'));
+router.post('/vancouver', GetRequestHandler('Vancouver'));
 
 function GetRequestHandler(appName){
   var requestHandler = function(req, res, next){
